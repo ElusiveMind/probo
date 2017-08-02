@@ -136,7 +136,7 @@ describe('WordPress plugin', function() {
 
     app.script = [];
     app.populateScriptArray();
-    app.script.should.have.length(35);
+    app.script.should.have.length(36);
 
     done();
   });
@@ -147,6 +147,7 @@ describe('WordPress plugin', function() {
     app.script.should.containEql('if [ -a "$SRC_DIR/index.php" ]');
     app.script.should.containEql('ln -s $SRC_DIR  /var/www/html');
     app.script.should.containEql(`mysql -e 'create database ${constants.WORDPRESS_DATABASE_NAME}'`);
+    app.script.should.containEql(`PHPINI_PATH=\`php -i | grep php.ini | head -1 | sed 's/\/cli\/.*//g' | sed 's/.* //g'\``);
 
     done();
   });
